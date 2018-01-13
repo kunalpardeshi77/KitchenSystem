@@ -19,7 +19,7 @@ function orderProcessed(product){
 	$.ajax({
 	  	type: "POST",
 	 	dataType : "json",
-	  	url: "http://localhost:3000/orderProcessed",
+	  	url: "/orderProcessed",
 	  	data: product,
 	  	success: orderProcessedCallback,/* function(data){
 			$("#quantity_" + data._id).text(data.quantity);
@@ -62,7 +62,7 @@ function sendData(ele){
 		},
 	  	type: "POST",
 	 	dataType : "json",
-	  	url: "http://localhost:3000/placeOrder",
+	  	url: "/placeOrder",
 	  	data: params,
 	  	success: placeOrderCallback,/*function(data){
 	  	if(eleId === "quantityBtn"){
