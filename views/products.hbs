@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+	  <link rel="stylesheet" type="text/css" href="../kitchen.css">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+	  <script src="/socket.io/socket.io.js"></script>
+    <title>Some Website</title>
+  </head>
+  <body>
+    <h1>{{pageTitle}}</h1>
+    <p>{{welcomeMessage}}</p>
+
+	<div class="container">
+	<h2>Kitchen Display Table</h2>
+	<table class="table table-dark table-hover">
+		<thead>
+			<th>Name</th>
+			<th>Quantity</th>
+			<th>Created-till-now</th>
+			<th>Predicted</th>
+			<th>Status</th>
+		</thead>
+	    <tbody>
+	            {{#each products}}
+				<tr id={{this.id}}>
+	                <td>{{this.productName}}</td>
+	                <td id="quantity_{{this.id}}">{{this.quantity}}</td>
+	                <td id="createdTillNow_{{this.id}}">{{this.createdTillNow}}</td>
+					<td id="predicted_{{this.id}}">{{this.predicted}}</td>
+					<td><button type="button" id="orderProcessed" class="btn btn-primary" onclick="orderProcessed({'productId' : '{{this.id}}'})">Done</button></td>
+				</tr>
+	            {{/each}}
+	    </tbody>
+	</table>
+	<button type="button" class="btn btn-outline-primary" onClick="window.open('http://localhost:3000/generateProductsReport')">Generate Report</button>
+	</div>
+	
+	<form class="form-inline">
+	  <div class="col-xs-4 form-group">
+			<label for="sel1">Select Product</label>
+		  <select class="form-control" id="quantityProdId" name="productId">
+		  {{#each products}}
+			<option value={{this.id}}>{{this.productName}}</option>
+		{{/each}}
+		  </select>
+	  </div>
+	  <div class="col-xs-4 form-group">
+		<label for="quantity">Quantity:</label>
+		<input class="form-control" id="quantity" name="quantity">
+	  </div>
+	  <div class="col-xs-4 form-group">
+	  <button type="button" id="quantityBtn" class="btn btn-primary" onclick="sendData(this)">Place Order</button>
+	  </div>
+	</form>
+	
+	<form class="form-inline">
+	  <div class="col-xs-4 form-group">
+			<label for="sel1">Select Product</label>
+		  <select class="form-control" id="predictedProdId" name="productId">
+		  {{#each products}}
+			<option value={{this.id}}>{{this.productName}}</option>
+		{{/each}}
+		  </select>
+	  </div>
+	  <div class="col-xs-4 form-group">
+		<label for="Predicted">Predicted values:</label>
+		<input class="form-control" id="predicted" name="predicted">
+	  </div>
+	  <div class="col-xs-4 form-group">
+		<button type="button" id="predictedBtn" class="btn btn-primary" onclick="sendData()">Upadate Predicted</button>
+	  </div>
+	</form>
+    <script src="../index.js"></script>
+  </body>
+</html>
